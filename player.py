@@ -6,6 +6,18 @@ player_list = list()
 # Token class is player object
 class Token:
 
+    """
+    **The brain of the game.**
+
+    To initialise, 
+    - name : players name
+
+    Other
+    - pos : Live position of the player on the board
+    - bal : Current balance of the player
+    - properties : An array of all properties owned
+        
+    """
     in_jail = False
     double_counter = 0
 
@@ -59,8 +71,38 @@ class Token:
         print(f"\nCurrent balance of {self.name} is now {self.bal}" +
               f"\nCurrent balance of {owner.name} is now {owner.bal}")
         
+
+    def trade(self):
+        tradee = input("Enter player to trade with: ")
+        player = ''
+        for i in player_list:
+            if i.name == tradee:
+                player = i
+        
+        print(f"You chose to trade with {player.name}")
+        print(f"{player.name} has current balance of {player.bal}")
+        print(f"Your current balance: {self.bal}")
+        print(f"Properties owned are [ ", end="")
+        for trade_props in player.property_list:
+            print(trade_props.name, end=" ")
+        print("]")
+
+        finish_check = input("Done?")
+        if 'n' in finish_check:
+            return 'r'
+
+
+        
     def pay_util_rent(self, owner, die):
         payable_amt = int(die * property_map[self.pos].multi)
+        print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
+        self.bal -= payable_amt
+        owner.bal += payable_amt
+        print(f"\nCurrent balance of {self.name} is now {self.bal}" +
+              f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        
+    def pay_station(self, owner):
+        payable_amt = 50
         print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
         self.bal -= payable_amt
         owner.bal += payable_amt
@@ -73,6 +115,12 @@ class Token:
             property_obj = property_map[self.pos]
             print(f"{self.name} has moved {die} spaces to {property_obj.name}." 
                 +f"\n{self.name}'s current balance is {self.bal}\n")
+            
+            if type == 'p':
+                print(f"Other properties in {property_obj.color} :- \n")
+                for property_index in color_index[property_obj.color]:
+                    print(f"{property_map[property_index].name}", end="  ")
+                print()
             
             if property_obj.is_owned == False:    # If property is not owned
                 print(f"{property_obj.name} costs ${property_obj.price}")
@@ -90,6 +138,8 @@ class Token:
                             print(f"{self.name} has landed on {property_obj.name} which belongs to {player.name}")
                             if (type == 'p'):
                                 self.pay_rent(player)
+                            elif (type == 's'):
+                                self.pay_station(player)
                             else:
                                 self.pay_util_rent(player, die)
 
@@ -97,6 +147,8 @@ class Token:
             
             print(f"{self.name} has moved {die} spaces to unimplemented position {self.pos}." 
                 +f"\n{self.name}'s current balance is {self.bal}\n")
+            for i in range(15):
+                print("*" * 30)
             
     def pay_tax(self):
         print(tax_map[self.pos][0], f", {self.name} pays {tax_map[self.pos][1]}")

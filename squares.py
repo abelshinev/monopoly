@@ -9,9 +9,10 @@ class Property(Square):
     house_ct = 0
     is_owned = False
     
-    def __init__(self, name, pos, price: int):
+    def __init__(self, name, pos, price: int, color: str):
         super().__init__(name, pos)
         self.price = price
+        self.color = color
 
 
 class Station(Square):
@@ -43,34 +44,34 @@ class Cards(Square):
 
 """ PROPERTY OBJECTS """
 
-old_kent = Property('Old Kent Road', 1, 60)
-whitechapel = Property('Whitechapel Road', 3, 60)
+old_kent = Property('Old Kent Road', 1, 60, "brown")
+whitechapel = Property('Whitechapel Road', 3, 60, "brown")
 kings_cross = Station('Kings Cross Station', 5)
-angel_isl = Property('The Angel Islington', 6, 100)
-euston_road = Property('Euston Road', 8, 100)
-pentonville = Property('Pentonville Road', 9, 120)
-pall_mall = Property('Pall Mall', 11, 140)
+angel_isl = Property('The Angel Islington', 6, 100, "aqua")
+euston_road = Property('Euston Road', 8, 100, "aqua")
+pentonville = Property('Pentonville Road', 9, 120, "aqua")
+pall_mall = Property('Pall Mall', 11, 140, "pink")
 electric_co = Utility('Electric Company', 12)
-whitehall = Property('Whitehall', 13, 140)
-northumber = Property('Northumberland Avenue', 14, 160)
+whitehall = Property('Whitehall', 13, 140, "pink")
+northumber = Property('Northumberland Avenue', 14, 160, "pink")
 marylebone = Station('Marylebone Station', 15)
-bow_street = Property('Bow Street', 16, 180)
-marlborough = Property('Marlborough Street', 18, 180)
-vine_str = Property('Vine Street', 19, 200)
-strand = Property('The Strand', 21, 220)
-fleet_str = Property('Fleet Street', 23, 220)
-trafalgar = Property('Trafalgar Square', 24, 240)
+bow_street = Property('Bow Street', 16, 180, "orange")
+marlborough = Property('Marlborough Street', 18, 180, "orange")
+vine_str = Property('Vine Street', 19, 200, "orange")
+strand = Property('The Strand', 21, 220, "red")
+fleet_str = Property('Fleet Street', 23, 220, "red")
+trafalgar = Property('Trafalgar Square', 24, 240, "red")
 fenchurch = Station('Fenchurch Station', 25)
-leicester = Property('Leicester Square',26, 260)
-coventry = Property('Coventry Street', 27, 260)
+leicester = Property('Leicester Square',26, 260, "yellow")
+coventry = Property('Coventry Street', 27, 260, "yellow")
 water_works = Utility('Water Works', 28)
-piccadilly = Property('Piccadilly', 29, 280)
-regent_str = Property('Regent Street', 31, 300)
-oxford_str = Property('Oxford Street', 32, 300)
-bond_str = Property('Bond Street', 34, 320)
+piccadilly = Property('Piccadilly', 29, 280, "yellow")
+regent_str = Property('Regent Street', 31, 300, "green")
+oxford_str = Property('Oxford Street', 32, 300, "green")
+bond_str = Property('Bond Street', 34, 320, "green")
 liverpool = Station('Liverpool Station', 35)
-park_lane = Property('Park Lane', 37, 350)
-mayfair = Property('Mayfair', 39, 400)
+park_lane = Property('Park Lane', 37, 350, "blue")
+mayfair = Property('Mayfair', 39, 400, "blue")
 
 
 # List of all places for to be accessed in dictionary
@@ -82,6 +83,18 @@ board_lay = [
 ]
 """List with board Layout"""
 
+color_index = {
+    "brown": [1, 3], "aqua": [6, 8, 9],
+    "pink": [11, 13, 14], "orange": [16, 18, 19],
+    "red": [21, 23, 24], "yellow": [26, 27, 29],
+    "green": [31, 32, 34], "blue": [37, 39]
+}
+"""
+Index of all the properties in one colour group
+
+    - Key: colour string
+    - Val: location array
+"""
 
 property_map = dict()
 """
@@ -108,15 +121,13 @@ null_map = {
 wild_card_map = {}
 
 map_legend = {
-    1: "p", 2: "cc", 3: "p", 4: "t", 5: "p", 6: "p", 7: "c", 8: "p", 9: "p", 10: "n",
-    11: "p", 12: "u", 13: "p", 14: "p", 15: "p", 16: "p", 17: "cc", 18: "p", 19: "p", 20: "n",
-    21: "p", 22: "c", 23: "p", 24: "p", 25: "p", 26: "p", 27: "p", 28: "u", 29: "p", 30: "j",
-    31: "p", 32: "p", 33: "cc", 34: "p", 35: "p", 36: "c", 37: "p", 38: "t", 39: "p", 40: 'n'
+    1: "p", 2: "cc", 3: "p", 4: "t", 5: "s", 6: "p", 7: "c", 8: "p", 9: "p", 10: "n",
+    11: "p", 12: "u", 13: "p", 14: "p", 15: "s", 16: "p", 17: "cc", 18: "p", 19: "p", 20: "n",
+    21: "p", 22: "c", 23: "p", 24: "p", 25: "s", 26: "p", 27: "p", 28: "u", 29: "p", 30: "j",
+    31: "p", 32: "p", 33: "cc", 34: "p", 35: "s", 36: "c", 37: "p", 38: "t", 39: "p", 40: 'n'
 }
 """
 Map Legend maps every square to space type
-
     - Key: position
     - Value: type of square
-
 """
