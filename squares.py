@@ -120,5 +120,3 @@ Map Legend maps every square to space type
     - Value: type of square
 
 """
-
-# github commit test

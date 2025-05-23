@@ -40,4 +40,3 @@ while len(player_list) >= 2:
         break
     play_round()
 
-# github commit test

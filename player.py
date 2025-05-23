@@ -154,5 +154,3 @@ def init_player_list(no_players: int) -> list[Token]:
         player_list.append(new_player)
     
     return player_list
-
-# github commit test
