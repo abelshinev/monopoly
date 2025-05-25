@@ -87,9 +87,89 @@ class Token:
             print(trade_props.name, end=" ")
         print("]")
 
-        finish_check = input("Done?")
+        def return_names(property):
+            try:
+                return property.name
+            except AttributeError:
+                print("/!\ WARN: money was inputted to property finder system")
+                return property
+        
+        def setup_my_list():
+            item_names = list(map(return_names, self.property_list))
+            print(item_names)
+            my_items = list()   
+            
+            x = 'a'
+            while(x.lower() != 'x'):
+                x = input("Enter element/s to trade [X to stop]\n")
+                if x in item_names:
+                    for prop in self.property_list:
+                        if prop.name == x:
+                            my_items.append(prop)
+                            print(f"{prop.name} has been added to inventory")
+                elif x == 'x':
+                    pass
+                else:
+                    print(f"/!\ '{x}' is not a valid place!")
+
+               
+            return my_items
+
+        trade_list = player.property_list
+        trade_list_name = map(return_names, trade_list)
+        trade_item = "a"
+        trade_cart = []
+
+        while trade_item.lower() != 'x':
+            trade_item = input("Enter interested element from the list [X to stop]\n")
+            if (trade_item.isnumeric()):
+                print(f"${trade_item} has been added to trade inventory")
+                trade_cart.append(int(trade_item))
+
+            else:
+                if trade_item in trade_list_name:
+                    for prop in trade_list:
+                        if (prop.name == trade_item):
+                            trade_cart.append(prop)
+                            print(f"{prop.name} has been added to trade inventory")
+                elif trade_item == 'x':
+                    pass
+                else:
+                    print(f"/!\ '{trade_item}' is not a valid place!")
+
+        trade_cart_names = list(map(return_names, trade_cart))
+        print(f"{player.name}'s wanted goods -> {trade_cart_names}")
+        
+        my_list = setup_my_list()
+        my_list_names = list(map(return_names, my_list))
+        print(f"{self.name}'s offered -> {my_list_names}")
+        print(f"{player.name}'s wanted goods -> {trade_cart_names}")
+
+        confirm = input(f"{player.name}, do you accept the trade?\n\ty: Yes\n\tn: No\n\tc: Counter Offer\n")
+        if confirm.lower() == 'y':
+            self.property_list.extend(trade_cart)
+            for item in my_list:
+                if isinstance(item, Property):
+                    self.property_list.remove(item)
+                else:
+                    self.bal -= item
+            
+            player.property_list.extend(my_list)
+            for item in trade_cart:
+                player.property_list.remove(item)
+
+            my_new_p_list = list(map(return_names, self.property_list))
+            print(my_new_p_list)
+            tradee_new_p_list = list(map(return_names, player.property_list))
+            print(tradee_new_p_list)
+
+
+
+        finish_check = input("Done?\n")
         if 'n' in finish_check:
             return 'r'
+        if 'oth' in finish_check:
+            return 'n'
 
 
         
