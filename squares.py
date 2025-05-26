@@ -115,7 +115,7 @@ tax_map = {
 null_map = {
     10: "is just visiting jail",
     20: "is on free parking",
-    40: "is on go"
+    0: "is on go"
 }
 
 wild_card_map = {}
@@ -124,7 +124,7 @@ map_legend = {
     1: "p", 2: "cc", 3: "p", 4: "t", 5: "s", 6: "p", 7: "c", 8: "p", 9: "p", 10: "n",
     11: "p", 12: "u", 13: "p", 14: "p", 15: "s", 16: "p", 17: "cc", 18: "p", 19: "p", 20: "n",
     21: "p", 22: "c", 23: "p", 24: "p", 25: "s", 26: "p", 27: "p", 28: "u", 29: "p", 30: "j",
-    31: "p", 32: "p", 33: "cc", 34: "p", 35: "s", 36: "c", 37: "p", 38: "t", 39: "p", 40: 'n'
+    31: "p", 32: "p", 33: "cc", 34: "p", 35: "s", 36: "c", 37: "p", 38: "t", 39: "p", 40: 'n', 0: 'n'
 }
 """
 Map Legend maps every square to space type

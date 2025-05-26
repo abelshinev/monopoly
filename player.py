@@ -33,7 +33,7 @@ class Token:
         return d1, d2
     
     def pos_check(self) -> int:
-        if self.pos > 40:
+        if self.pos >= 40:
             self.pos -= 40
             print(f"{self.name} has passed go and has collected $200")
             self.bal += 200
@@ -107,6 +107,8 @@ class Token:
                         if prop.name == x:
                             my_items.append(prop)
                             print(f"{prop.name} has been added to inventory")
+                elif x.isnumeric():
+                    my_items.append(int(x))
                 elif x == 'x':
                     pass
                 else:
@@ -147,22 +149,38 @@ class Token:
 
         confirm = input(f"{player.name}, do you accept the trade?\n\ty: Yes\n\tn: No\n\tc: Counter Offer\n")
         if confirm.lower() == 'y':
-            self.property_list.extend(trade_cart)
-            for item in my_list:
+
+            """Self Transactions"""
+            for item in trade_cart:  # Recieving
+                if isinstance(item, Property):
+                    self.property_list.append(item)
+                else:
+                    self.bal += item
+            for item in my_list:    # Sending
                 if isinstance(item, Property):
                     self.property_list.remove(item)
                 else:
                     self.bal -= item
             
-            player.property_list.extend(my_list)
-            for item in trade_cart:
-                player.property_list.remove(item)
+            """Tradee Transactions"""
+            for item in my_list:    # Recieving
+                if isinstance(item, Property):
+                    player.property_list.append(item)
+                else:
+                    player.bal += item
+            for item in trade_cart: # Sending
+                if isinstance(item, Property):
+                    player.property_list.remove(item)
+                else:
+                    player.bal -= item
 
             my_new_p_list = list(map(return_names, self.property_list))
             print(my_new_p_list)
             tradee_new_p_list = list(map(return_names, player.property_list))
             print(tradee_new_p_list)
 
+        elif confirm.lower() == 'n':
+            print(f"{self.name}, {player.name} has declined your trade")
 
 
         finish_check = input("Done?\n")
