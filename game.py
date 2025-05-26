@@ -8,15 +8,25 @@ def wait(p: Token, mode):
         x = p.trade()
         if x == 'r':
             wait(p, 't')
+    elif mode == 'h':
+        x = p.handle_housing() 
+        if x == 'r':
+            wait(p, 'h')
+            
 
-
+double_counter = 0
 def play_turn(p: Token):
-    
+    global double_counter # It will not access top level double_counter otherwise
     g = input("Type `t` to trade\nPress `Enter` to roll dice\n")
     if g == '':
-        p.move()
+        double = p.move(double_counter)
+        if double:
+            double_counter += 1 
+            play_turn(p)
     else:
         wait(p, g)
+        play_turn(p)
+    double_counter = 0
 
 def play_round():
     """The main game loop"""

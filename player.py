@@ -3,6 +3,15 @@ from squares import *
 
 player_list = list()
 
+
+def return_names(property): # Helper function for comprehensibility
+    try:
+        return property.name
+    except AttributeError:
+        print("/!\ WARN: money was inputted to property finder system")
+        return property
+    
+
 # Token class is player object
 class Token:
 
@@ -70,7 +79,7 @@ class Token:
         owner.bal += payable_amt
         print(f"\nCurrent balance of {self.name} is now {self.bal}" +
               f"\nCurrent balance of {owner.name} is now {owner.bal}")
-        
+             
 
     def trade(self):
         tradee = input("Enter player to trade with: ")
@@ -93,12 +102,6 @@ class Token:
             print(trade_props.name, end=" ")
         print("]")
 
-        def return_names(property):
-            try:
-                return property.name
-            except AttributeError:
-                print("/!\ WARN: money was inputted to property finder system")
-                return property
         
         def setup_my_list():
             item_names = list(map(return_names, self.property_list))
@@ -195,6 +198,49 @@ class Token:
         if 'oth' in finish_check:
             return 'n'
 
+    def handle_housing(self):
+        target_prop = ''
+        my_prop_list = list(map(return_names, self.property_list))
+        print(my_prop_list)
+        t = input("Enter targetted property to add a house to: ")
+        
+        if t not in my_prop_list:
+            return 'r'
+        
+        for prop in self.property_list:
+            if prop.name == t:
+                target_prop = prop
+        
+        print(f"You have chosen to upgrade {target_prop.name}")
+        print(target_prop.color, "property")
+        color_set = color_index[target_prop.color]
+        for prop_index in color_set:
+            if property_map[prop_index].name not in my_prop_list:
+                print(f"/!\You do not have the full {target_prop.color}  color set!")
+                return 'f'
+            
+        def house_count(idx: int): # Helper function for mapping
+            return property_map[idx].house_ct
+        
+        color_set_house_list = list(map(house_count, color_set))
+        print(color_set_house_list)
+
+
+
+
+        if target_prop.house_ct < 4:
+            target_prop.house_ct += 1 
+            print(f"Buying house on {self.name}'s {target_prop.name} for $50 ")
+            print(f"{target_prop.name} currently has {target_prop.house_ct} houses")
+        else: 
+            target_prop.house_ct = 5
+            print(f"Upgraded to hotel on {self.name}'s {target_prop.name}")
+            print(f"{target_prop.name} currently has a hotel") 
+
+        self.bal -= 50
+        print("Current balance is", self.bal)
+
+
 
         
     def pay_util_rent(self, owner, die):
@@ -259,15 +305,18 @@ class Token:
         self.bal -= tax_map[self.pos][1]
         print(f"{self.name}'s current balance is {self.bal}\n")
 
-    def move(self):
+    def move(self, double_counter: int):
         
         d1, d2 = self.diceroll()
 
+        print("double counter is", double_counter)
+
         print(f"{self.name} has rolled a {d1} and a {d2}!\n")
-        if self.double_counter == 2:
+        if double_counter == 2:
             if d1 == d2:
                 print("Third double go straight to jail")
                 self.in_jail = True
+                self.pos = 10
                 return
         self.pos += d1 + d2
         self.pos_check()
@@ -298,9 +347,10 @@ class Token:
         if d1 == d2:
             if not self.in_jail:
                 print(f"{self.name} rolled a double so its their turn again")
-                self.double_counter += 1
-                self.move()
-        self.double_counter = 0
+                return True
+        
+        return False
+
 
 def init_player_list(no_players: int) -> list[Token]:
     """this shit initialises player list"""
