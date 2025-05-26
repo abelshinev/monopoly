@@ -75,9 +75,15 @@ class Token:
     def trade(self):
         tradee = input("Enter player to trade with: ")
         player = ''
+        if tradee == self.name:
+            print("/!\ You cannot trade with yourself")
+            return 'r'
         for i in player_list:
             if i.name == tradee:
                 player = i
+        if player == '':
+            print(f"{tradee} is not a valid player")
+            return 'r'
         
         print(f"You chose to trade with {player.name}")
         print(f"{player.name} has current balance of {player.bal}")
@@ -118,7 +124,7 @@ class Token:
             return my_items
 
         trade_list = player.property_list
-        trade_list_name = map(return_names, trade_list)
+        trade_list_name = list(map(return_names, trade_list))
         trade_item = "a"
         trade_cart = []
 
@@ -152,24 +158,24 @@ class Token:
 
             """Self Transactions"""
             for item in trade_cart:  # Recieving
-                if isinstance(item, Property):
+                if isinstance(item, Square):
                     self.property_list.append(item)
                 else:
                     self.bal += item
             for item in my_list:    # Sending
-                if isinstance(item, Property):
+                if isinstance(item, Square):
                     self.property_list.remove(item)
                 else:
                     self.bal -= item
             
             """Tradee Transactions"""
             for item in my_list:    # Recieving
-                if isinstance(item, Property):
+                if isinstance(item, Square):
                     player.property_list.append(item)
                 else:
                     player.bal += item
             for item in trade_cart: # Sending
-                if isinstance(item, Property):
+                if isinstance(item, Square):
                     player.property_list.remove(item)
                 else:
                     player.bal -= item

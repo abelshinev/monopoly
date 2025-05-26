@@ -25,15 +25,15 @@ def play_round():
         print(f"\nIt is currently {p.name}'s turn.")
         if p.in_jail:
             print(f"{p.name} is currently in jail, pay 50 or roll a double")
-            x = int(input("1. Pay $50\n2. Roll a double\n--->>"))
+            x = input("1. Pay $50\n2. Roll a double\n--->>")
 
-            if x == 1:
+            if x == '1':
                 print(f"{p.name} has paid $50 to leave jail")
                 p.bal -= 50
                 p.in_jail = False
                 play_turn(p)
 
-            elif x == 2:
+            elif x == '2':
                 d1, d2 = p.diceroll()
                 print(f"{p.name} rolled a {d1} and a {d2}")
                 if d1 == d2:
