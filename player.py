@@ -210,7 +210,11 @@ class Token:
         for prop in self.property_list:
             if prop.name == t:
                 target_prop = prop
+    
+        def house_count(idx: int): # Helper function for mapping
+            return property_map[idx].house_ct
         
+
         print(f"You have chosen to upgrade {target_prop.name}")
         print(target_prop.color, "property")
         color_set = color_index[target_prop.color]
@@ -218,15 +222,13 @@ class Token:
             if property_map[prop_index].name not in my_prop_list:
                 print(f"/!\You do not have the full {target_prop.color}  color set!")
                 return 'f'
-            
-        def house_count(idx: int): # Helper function for mapping
-            return property_map[idx].house_ct
-        
+
         color_set_house_list = list(map(house_count, color_set))
         print(color_set_house_list)
-
-
-
+        
+        if target_prop.house_ct != min(color_set_house_list):
+            print("/!\ Revoking purchase: Your other properties are not up to level")
+            return 'r'
 
         if target_prop.house_ct < 4:
             target_prop.house_ct += 1 
