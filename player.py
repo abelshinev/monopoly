@@ -78,13 +78,28 @@ class Token:
             
 
     def pay_rent(self, owner):
-        payable_amt = int(property_map[self.pos].price/10)
+        target_property = property_map[self.pos]
+        payable_amt = 0
+
+        if target_property.child_lock:
+            if target_property.house_ct == 0:
+                payable_amt = (target_property.cost/10 - 4) * 2
+            else:
+                payable_amt = rent_index[target_property.name][target_property.house_ct-1]
+                if (target_property.house_ct <= 4):
+                    print(f"{target_property.name} has {target_property.house_ct} houses and therefore rent = ${payable_amt}")
+                else:
+                    print(f"{target_property.name} has 1 hotel and therefore rent = ${payable_amt}")
+            
+        else:
+            payable_amt = int(target_property.price/10) - 4
+        
         print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
         self.bal -= payable_amt
         owner.bal += payable_amt
         print(f"\nCurrent balance of {self.name} is now {self.bal}" +
-              f"\nCurrent balance of {owner.name} is now {owner.bal}")
-             
+            f"\nCurrent balance of {owner.name} is now {owner.bal}")
+            
 
     def trade(self):
         tradee = input("Enter player to trade with: ")
@@ -106,7 +121,6 @@ class Token:
         for trade_props in player.property_list:
             print(trade_props.name, end=" ")
         print("]")
-
         
         def setup_my_list():
             item_names = list(map(return_names, self.property_list))
@@ -131,7 +145,6 @@ class Token:
                 else:
                     print(f"/!\ '{x}' is not a valid place!")
 
-               
             return my_items
 
         trade_list = player.property_list
@@ -249,7 +262,7 @@ class Token:
         house_cost = color_to_cost_index[target_prop.color]
         if self.bal < house_cost:
             print(f"/!\ Insufficient balance to upgrade to a house, you are {house_cost - self.bal} short.") 
-            return 'r'
+            return
 
         if target_prop.house_ct < 4:
             target_prop.house_ct += 1 

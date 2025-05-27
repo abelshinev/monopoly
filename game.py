@@ -60,7 +60,7 @@ def play_round():
     
 
 # Actual Game start
-while len(player_list) >= 2:
+while len(player_list) >= 2 and len(player_list) <= 4:
     i = input("Continue? ")
 
     if i == "n":

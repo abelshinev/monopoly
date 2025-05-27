@@ -111,7 +111,18 @@ color_to_cost_index = {
     "green": 200, "blue": 150
 }
 
+rent_index = {
+    "Old Kent Road": [10, 30, 90, 160, 250],
+    "Whitechapel Road": [20, 60, 180, 320, 450],
+}
+"""
+**Master Rent Index**
 
+Has values of all rents of all properties on the board
+
+    - Key: Property name in string
+    - Value: list of len(5) with price written
+"""
 
 property_map = dict()
 """
