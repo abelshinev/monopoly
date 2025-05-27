@@ -10,11 +10,11 @@ class Property(Square):
     is_owned = False
     child_lock = False
     
-    def __init__(self, name, pos, price: int, color: str):
+    def __init__(self, name, pos, price: int, color: str, house_price):
         super().__init__(name, pos)
         self.price = price
         self.color = color
-
+ 
     def lock_child(self):
         self.child_lock = True
     
@@ -103,6 +103,13 @@ Index of all the properties in one colour group
     - Key: colour string
     - Val: location array
 """
+
+color_to_cost_index = {
+    "brown": 50, "aqua": 50,
+    "pink": 100, "orange": 100,
+    "red": 150, "yellow": 150,
+    "green": 200, "blue": 150
+}
 
 property_map = dict()
 """
