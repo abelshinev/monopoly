@@ -8,17 +8,24 @@ class Property(Square):
 
     house_ct = 0
     is_owned = False
+    child_lock = False
     
     def __init__(self, name, pos, price: int, color: str):
         super().__init__(name, pos)
         self.price = price
         self.color = color
 
+    def lock_child(self):
+        self.child_lock = True
+    
+
+
 
 class Station(Square):
 
     price = 200
     is_owned = False
+    child_lock = False
 
     def __init__(self, name, pos):
         super().__init__(name, pos)
@@ -28,6 +35,7 @@ class Utility(Square):
     price = 150
     is_owned = False
     multi = 4
+    child_lock = False
 
     def __init__(self, name, pos):
         super().__init__(name, pos)

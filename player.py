@@ -11,6 +11,9 @@ def return_names(property): # Helper function for comprehensibility
         print("/!\ WARN: money was inputted to property finder system")
         return property
     
+def lock_property(pos: int):
+    property_map[pos].lock_child()
+    
 
 # Token class is player object
 class Token:
@@ -114,8 +117,11 @@ class Token:
                 if x in item_names:
                     for prop in self.property_list:
                         if prop.name == x:
-                            my_items.append(prop)
-                            print(f"{prop.name} has been added to inventory")
+                            if prop.child_lock:
+                                print(f"{prop.name} is a part of a color set and cant be traded")
+                            else:
+                                my_items.append(prop)
+                                print(f"{prop.name} has been added to inventory")
                 elif x.isnumeric():
                     my_items.append(int(x))
                 elif x == 'x':
@@ -141,8 +147,12 @@ class Token:
                 if trade_item in trade_list_name:
                     for prop in trade_list:
                         if (prop.name == trade_item):
-                            trade_cart.append(prop)
-                            print(f"{prop.name} has been added to trade inventory")
+                            print(f"The child lock on {prop.name} is {prop.child_lock}")
+                            if prop.child_lock:
+                                print(f"{prop.name} is a part of a color set and cant be traded")
+                            else:
+                                trade_cart.append(prop)
+                                print(f"{prop.name} has been added to trade inventory")
                 elif trade_item == 'x':
                     pass
                 else:
@@ -222,9 +232,12 @@ class Token:
             if property_map[prop_index].name not in my_prop_list:
                 print(f"/!\You do not have the full {target_prop.color}  color set!")
                 return 'f'
-
+        
         color_set_house_list = list(map(house_count, color_set))
         print(color_set_house_list)
+
+        list(map(lock_property, color_set))
+        print(target_prop.color, "PROPERTIES HAVE BEEN LOCKED")
         
         if target_prop.house_ct != min(color_set_house_list):
             print("/!\ Revoking purchase: Your other properties are not up to level")
