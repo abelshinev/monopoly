@@ -10,7 +10,7 @@ class Property(Square):
     is_owned = False
     child_lock = False
     
-    def __init__(self, name, pos, price: int, color: str, house_price):
+    def __init__(self, name, pos, price: int, color: str):
         super().__init__(name, pos)
         self.price = price
         self.color = color
@@ -110,6 +110,8 @@ color_to_cost_index = {
     "red": 150, "yellow": 150,
     "green": 200, "blue": 150
 }
+
+
 
 property_map = dict()
 """

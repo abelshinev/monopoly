@@ -62,6 +62,8 @@ class Token:
             property_map[pos].is_owned = True
 
             print(f"{self.name}'s current balance is {self.bal}\n")
+        else:
+            print(f"/!\{self.bal} you have insufficient balance, you are short {cost - self.bal}")
         for i in self.property_list:
             print(i.name, end = " ")
         print("]")
@@ -242,17 +244,22 @@ class Token:
         if target_prop.house_ct != min(color_set_house_list):
             print("/!\ Revoking purchase: Your other properties are not up to level")
             return 'r'
+        
+        
+        house_cost = color_to_cost_index[target_prop.color]
+        if self.bal < house_cost:
+            print(f"/!\ Insufficient balance to upgrade to a house, you are {house_cost - self.bal} short.") 
+            return 'r'
 
         if target_prop.house_ct < 4:
             target_prop.house_ct += 1 
-            print(f"Buying house on {self.name}'s {target_prop.name} for $50 ")
+            print(f"Buying house on {self.name}'s {target_prop.name} for ${house_cost} ")
             print(f"{target_prop.name} currently has {target_prop.house_ct} houses")
         else: 
             target_prop.house_ct = 5
             print(f"Upgraded to hotel on {self.name}'s {target_prop.name}")
             print(f"{target_prop.name} currently has a hotel") 
-
-        self.bal -= 50
+        self.bal -= house_cost
         print("Current balance is", self.bal)
 
 
