@@ -50,6 +50,14 @@ class Token:
             print(f"{self.name} has passed go and has collected $200")
             self.bal += 200
 
+    def decrease_bal(self, amt: int):
+        if amt < self.bal:
+            self.bal -= amt
+            return True
+        else:
+            print(f"/!\ Insufficient balance: You are short ${amt - self.bal}")
+            return False
+
 
     def purchase(self, pos: int, type: str):
         """Function for player to buy a property"""
@@ -57,7 +65,7 @@ class Token:
         print(f"{property_map[pos].name} costs ${cost}")
         if self.bal > cost:
             print(f"{self.name} buys {property_map[pos].name}")
-            self.bal -= cost
+            self.decrease_bal(cost)
             self.property_list.append(property_map[pos])
             property_map[pos].is_owned = True
 
@@ -94,11 +102,14 @@ class Token:
         else:
             payable_amt = int(target_property.price/10) - 4
         
-        print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
-        self.bal -= payable_amt
-        owner.bal += payable_amt
-        print(f"\nCurrent balance of {self.name} is now {self.bal}" +
-            f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        x = self.decrease_bal(payable_amt)
+        if x:
+            print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
+            owner.bal += payable_amt
+            print(f"\nCurrent balance of {self.name} is now {self.bal}" +
+                f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        else:
+            print("Sell or be bankrupt")
             
 
     def trade(self):
@@ -194,7 +205,7 @@ class Token:
                 if isinstance(item, Square):
                     self.property_list.remove(item)
                 else:
-                    self.bal -= item
+                    self.decrease_bal(item)
             
             """Tradee Transactions"""
             for item in my_list:    # Recieving
@@ -206,7 +217,7 @@ class Token:
                 if isinstance(item, Square):
                     player.property_list.remove(item)
                 else:
-                    player.bal -= item
+                    player.decrease_bal(item)
 
             my_new_p_list = list(map(return_names, self.property_list))
             print(my_new_p_list)
@@ -272,7 +283,7 @@ class Token:
             target_prop.house_ct = 5
             print(f"Upgraded to hotel on {self.name}'s {target_prop.name}")
             print(f"{target_prop.name} currently has a hotel") 
-        self.bal -= house_cost
+        self.decrease_bal(house_cost)
         print("Current balance is", self.bal)
 
 
@@ -281,18 +292,24 @@ class Token:
     def pay_util_rent(self, owner, die):
         payable_amt = int(die * property_map[self.pos].multi)
         print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
-        self.bal -= payable_amt
-        owner.bal += payable_amt
-        print(f"\nCurrent balance of {self.name} is now {self.bal}" +
-              f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        x = self.decrease_bal(payable_amt)
+        if x:
+            owner.bal += payable_amt
+            print(f"\nCurrent balance of {self.name} is now {self.bal}" +
+                f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        else:
+            print("Sell or be bankrupt")
         
     def pay_station(self, owner):
         payable_amt = 50
         print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
-        self.bal -= payable_amt
-        owner.bal += payable_amt
-        print(f"\nCurrent balance of {self.name} is now {self.bal}" +
-              f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        x = self.decrease_bal(payable_amt)
+        if x:
+            owner.bal += payable_amt
+            print(f"\nCurrent balance of {self.name} is now {self.bal}" +
+                f"\nCurrent balance of {owner.name} is now {owner.bal}")
+        else:
+            print("Sell or be bankrupt")
 
 
     def land_property(self, die, type: str):
@@ -337,8 +354,11 @@ class Token:
             
     def pay_tax(self):
         print(tax_map[self.pos][0], f", {self.name} pays {tax_map[self.pos][1]}")
-        self.bal -= tax_map[self.pos][1]
-        print(f"{self.name}'s current balance is {self.bal}\n")
+        x = self.decrease_bal(tax_map[self.pos][1])
+        if x:
+            print(f"{self.name}'s current balance is {self.bal}\n")
+        else:
+            print("Sell or be bankrupt")
 
     def move(self, double_counter: int):
         
