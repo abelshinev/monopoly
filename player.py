@@ -89,7 +89,7 @@ class Token:
         target_property = property_map[self.pos]
         payable_amt = 0
 
-        if target_property.child_lock:
+        if target_property.child_lock: 
             if target_property.house_ct == 0:
                 payable_amt = (target_property.cost/10 - 4) * 2
             else:
@@ -114,7 +114,7 @@ class Token:
 
     def trade(self):
         tradee = input("Enter player to trade with: ")
-        player = ''
+        player = ''     # player is the trade player object
         if tradee == self.name:
             print("/!\ You cannot trade with yourself")
             return 'r'
@@ -133,7 +133,8 @@ class Token:
             print(trade_props.name, end=" ")
         print("]")
         
-        def setup_my_list():
+        def setup_my_list(): 
+            """Returns a list with all the property objects that self wants to trade"""
             item_names = list(map(return_names, self.property_list))
             print(item_names)
             my_items = list()   
@@ -165,16 +166,16 @@ class Token:
 
         while trade_item.lower() != 'x':
             trade_item = input("Enter interested element from the list [X to stop]\n")
-            if (trade_item.isnumeric()):
+            if (trade_item.isnumeric()):    # Money Input
                 print(f"${trade_item} has been added to trade inventory")
                 trade_cart.append(int(trade_item))
 
-            else:
+            else:                           # Property input
                 if trade_item in trade_list_name:
                     for prop in trade_list:
                         if (prop.name == trade_item):
-                            print(f"The child lock on {prop.name} is {prop.child_lock}")
-                            if prop.child_lock:
+                            # print(f"The child lock on {prop.name} is {prop.child_lock}")    
+                            if prop.child_lock:         # Check for color set locking
                                 print(f"{prop.name} is a part of a color set and cant be traded")
                             else:
                                 trade_cart.append(prop)
@@ -187,7 +188,7 @@ class Token:
         trade_cart_names = list(map(return_names, trade_cart))
         print(f"{player.name}'s wanted goods -> {trade_cart_names}")
         
-        my_list = setup_my_list()
+        my_list = setup_my_list() 
         my_list_names = list(map(return_names, my_list))
         print(f"{self.name}'s offered -> {my_list_names}")
         print(f"{player.name}'s wanted goods -> {trade_cart_names}")
@@ -232,10 +233,10 @@ class Token:
         if 'n' in finish_check:
             return 'r'
         if 'oth' in finish_check:
-            return 'n'
+            return 'n' # Goes to check statement
 
     def handle_housing(self):
-        target_prop = ''
+        target_prop = ''        # target_prop will be the property object
         my_prop_list = list(map(return_names, self.property_list))
         print(my_prop_list)
         t = input("Enter targetted property to add a house to: ")
@@ -287,8 +288,6 @@ class Token:
         print("Current balance is", self.bal)
 
 
-
-        
     def pay_util_rent(self, owner, die):
         payable_amt = int(die * property_map[self.pos].multi)
         print(f"{self.name} pays rent of ${payable_amt} to {owner.name}")
