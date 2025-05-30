@@ -361,8 +361,6 @@ class Token:
         
         d1, d2 = self.diceroll()
 
-        print("double counter is", double_counter)
-
         print(f"{self.name} has rolled a {d1} and a {d2}!\n")
         if double_counter == 2:
             if d1 == d2:

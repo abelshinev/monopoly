@@ -202,3 +202,10 @@ Has values of all rents of all properties on the board
     - Value: list of len(5) with price written
 """
 
+chance_deck = [
+
+]
+
+cc_deck = [
+    
+]
