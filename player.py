@@ -169,9 +169,7 @@ class Token:
             if (trade_item.isnumeric()):    # Money Input
                 print(f"${trade_item} has been added to trade inventory")
                 trade_cart.append(int(trade_item))
-
-            else:                           # Property input
-                if trade_item in trade_list_name:
+            elif trade_item in trade_list_name: # Property input
                     for prop in trade_list:
                         if (prop.name == trade_item):
                             # print(f"The child lock on {prop.name} is {prop.child_lock}")    
@@ -180,10 +178,10 @@ class Token:
                             else:
                                 trade_cart.append(prop)
                                 print(f"{prop.name} has been added to trade inventory")
-                elif trade_item == 'x':
-                    pass
-                else:
-                    print(f"/!\ '{trade_item}' is not a valid place!")
+            elif trade_item == 'x':
+                pass
+            else:
+                print(f"/!\ '{trade_item}' is not a valid place!")
 
         trade_cart_names = list(map(return_names, trade_cart))
         print(f"{player.name}'s wanted goods -> {trade_cart_names}")
@@ -242,7 +240,7 @@ class Token:
         t = input("Enter targetted property to add a house to: ")
         
         if t not in my_prop_list:
-            return 'r'
+            return
         
         for prop in self.property_list:
             if prop.name == t:
