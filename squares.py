@@ -160,7 +160,6 @@ Map Legend maps every square to space type
     - Value: type of square
 """
 
-
 rent_index = {
     
     "Old Kent Road": [10, 30, 90, 160, 250],
@@ -202,3 +201,4 @@ Has values of all rents of all properties on the board
     - Key: Property name in string
     - Value: list of len(5) with price written
 """
+

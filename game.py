@@ -42,6 +42,8 @@ def play_round():
         print(f"\nIt is currently {p.name}'s turn.")
         if p.in_jail:
             print(f"{p.name} is currently in jail, pay 50 or roll a double")
+            g = input("Type `t` to Trade\nType `h` for House Management")
+            wait(p, g)
             x = input("1. Pay $50\n2. Roll a double\n--->>")
 
             if x == '1':
