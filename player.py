@@ -1,6 +1,5 @@
 from random import randint, choice
 from squares import *
-from cc_function_list import read_cc_cards, read_chance_cards
 
 player_list = list()
 
@@ -358,19 +357,7 @@ class Token:
         else:
             print("Sell or be bankrupt")
 
-    def move(self, double_counter: int):
-        
-        d1, d2 = self.diceroll()
-
-        print(f"{self.name} has rolled a {d1} and a {d2}!\n")
-        if double_counter == 2:
-            if d1 == d2:
-                print("Third double go straight to jail")
-                self.in_jail = True
-                self.pos = 10
-                return
-        self.pos += d1 + d2
-        self.pos_check()
+    def land(self, d1, d2):
         print(f"{self.name}'s current pos = {self.pos}, {map_legend[self.pos]} [temporary]\n\n")
         if map_legend[self.pos] == 'p':
             self.land_property(d1+d2, 'p')
@@ -393,17 +380,33 @@ class Token:
             print("*"*20)
         elif map_legend[self.pos] == 'cc':
             print(self.name, "Pickup a community chest card it reads:\n")
-            cc_card = choice(cc_deck)
+            cc_card = choice(list(cc_deck))
             print(cc_card)
             print("*"*20)
             print("*"*20)
             print("*"*20)
+            read_cc_cards(self, cc_deck[cc_card])
         elif map_legend[self.pos] == 't':
             print(f"{self.name} has moved {d1+d2} spaces to ", end="")
             self.pay_tax()
         else:
             print("Major ERROR: This message should never be printed")
 
+
+    def move(self, double_counter: int):
+        
+        d1, d2 = self.diceroll()
+
+        print(f"{self.name} has rolled a {d1} and a {d2}!\n")
+        if double_counter == 2:
+            if d1 == d2:
+                print("Third double go straight to jail")
+                self.in_jail = True
+                self.pos = 10
+                return
+        self.pos += d1 + d2
+        self.pos_check()
+        self.land(d1, d2)
 
         if d1 == d2:
             if not self.in_jail:
