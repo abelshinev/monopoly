@@ -203,9 +203,39 @@ Has values of all rents of all properties on the board
 """
 
 chance_deck = [
-
+    "Advance to Go (Collect $200)",
+    "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",
+    "Advance to Mayfair",
+    "Advance to Trafalgar Square. If you pass Go, collect $200",
+    "Advance to Pall Mall. If you pass Go, collect $200",
+    "Take a trip to Marylebone Station. If you pass Go, collect $200",
+    "Advance to the nearest Utility. If unowned, you may buy it. If owned, pay owner 10x dice roll",
+    "Advance to the nearest Railway Station and pay owner twice the rent",
+    "Bank pays you dividend of $50",
+    "Get out of Jail Free",
+    "Go back three spaces",
+    "Make general repairs on all your property: $25 per house, $100 per hotel",
+    "Pay poor tax of $15",
+    "You have been elected Chairman of the Board. Pay each player $50",
+    "Your building loan matures. Collect $150",
+    "Speeding fine $15"
 ]
 
 cc_deck = [
-    
+    "Advance to Go (Collect $200)",
+    "Bank error in your favour. Collect $200",
+    "Doctor’s fees. Pay $50",
+    "From sale of stock you get $50",
+    "Get out of Jail Free",
+    "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",
+    "Holiday fund matures. Receive $100",
+    "Income tax refund. Collect $20",
+    "It is your birthday. Collect $10 from every player",
+    "Life insurance matures. Collect $100",
+    "Pay hospital fees of $100",
+    "Pay school fees of $50",
+    "Receive $25 consultancy fee",
+    "You are assessed for street repairs: $40 per house, $115 per hotel",
+    "You have won second prize in a beauty contest. Collect $10",
+    "You inherit $100"
 ]
