@@ -1,5 +1,6 @@
-from random import randint
+from random import randint, choice
 from squares import *
+from cc_function_list import read_cc_cards, read_chance_cards
 
 player_list = list()
 
@@ -384,9 +385,19 @@ class Token:
             self.pos = 10
             self.in_jail = True
         elif map_legend[self.pos] == 'c':
-            print("Pickup a chance card") 
+            print(self.name, "Pickup a chance card it reads:\n")
+            chance_card = choice(chance_deck)
+            print(chance_card)
+            print("*"*20)
+            print("*"*20)
+            print("*"*20)
         elif map_legend[self.pos] == 'cc':
-            print("You landed on community chest")
+            print(self.name, "Pickup a community chest card it reads:\n")
+            cc_card = choice(cc_deck)
+            print(cc_card)
+            print("*"*20)
+            print("*"*20)
+            print("*"*20)
         elif map_legend[self.pos] == 't':
             print(f"{self.name} has moved {d1+d2} spaces to ", end="")
             self.pay_tax()

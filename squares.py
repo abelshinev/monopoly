@@ -224,7 +224,7 @@ chance_deck = [
 cc_deck = [
     "Advance to Go (Collect $200)",
     "Bank error in your favour. Collect $200",
-    "Doctor’s fees. Pay $50",
+    "Doctor's fees. Pay $50",
     "From sale of stock you get $50",
     "Get out of Jail Free",
     "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",
