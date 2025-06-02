@@ -54,13 +54,15 @@ def read_chance_cards(player, chance_card: list):
         else:
             print("Bankruptcy :(")
     elif chance_card == 'move':
-        if player.pos > chance_card[1]:
-            print("You pass go and collect $200")
-            player.bal += 200
-            player.pos = chance_card[1]
-            player.land(0,0)
+        if player.pos < 0:
+            player.pos += chance_card[1]
         else:
-            player.land(0,0)
+            if player.pos > chance_card[1]:
+                print("You pass go and collect $200")
+                player.bal += 200
+                player.pos = chance_card[1]
+        
+        player.land(0,0)
 
 def read_cc_cards(player, cc_card: list):
     if cc_card[0] == 'jail':
