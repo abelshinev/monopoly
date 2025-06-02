@@ -280,6 +280,9 @@ class Token:
             target_prop.house_ct += 1 
             print(f"Buying house on {self.name}'s {target_prop.name} for ${house_cost} ")
             print(f"{target_prop.name} currently has {target_prop.house_ct} houses")
+        elif target_prop.house_ct == 5:
+            print("You are already at a hotel for", {target_prop.name}, "You cannot build further")
+            return
         else: 
             target_prop.house_ct = 5
             print(f"Upgraded to hotel on {self.name}'s {target_prop.name}")
