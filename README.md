@@ -18,10 +18,12 @@ It is the brain of the system governing aspects of the game like
 - Purchasing properties 
 - Trading
 - Paying rent
+- Handling house
 
 2. **`game.py`**
 
 Contains the main game loop. It controls the order of events for each player on their turn, also controls jail related actions.
+It is also where the trading/add house mechanism works. Soon to have functions for mortgaging in foreseeable future.
 
 3. **`squares .py`**
 
@@ -32,14 +34,18 @@ It is the registry for all the properties and contains all the data regarding th
 - The current rent of the property if a player which is not the owner were to land on the property
 - What colour set it belongs to
 - Index arrays which are the keys to access all abilities of each individual space
+- Map Legend indicated the type of each property for board to classify what the player can do on current space.
     
 ## Additional Information
 
-Project is still in development stage and does not have all above features implemented to completion as of now. Updates will be made once they are added to the 
-source code and a part of the game. 
+Project is still in testing stage and does  have all above features implemented to completion as of now. Updates will be made once they are added to the source code and a part of the game. 
+
+Two major aspect left is auctioning and mortgaging properties.
 
 ## Current Stage 
 
-Currently working on Trading mechanism, players can access other players inventories and request trades
+Currently on Testing Stage, the game is almost production ready. What remains is few rounds of experimental testing before release
 
-Next steps will be to work on the house and hotel management. The groundwork for which has been done with the introduction of color sets in the latest commit.
+## Future Expansions
+
+Converting this entire project into gamescript files in C#, making a 3D UI in Unity for visualization. Core concepts will remain same and use concepts already implemented just translated and able to be viewed as a proper game with functional GUI.
