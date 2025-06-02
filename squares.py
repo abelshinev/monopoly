@@ -1,5 +1,3 @@
-from cc_function_list import *
-
 class Square:
     
     def __init__(self, name: str, pos: int):
@@ -147,8 +145,6 @@ null_map = {
     20: "is on free parking",
     0: "is on go"
 }
-
-wild_card_map = {}
 
 map_legend = {
     1: "p", 2: "cc", 3: "p", 4: "t", 5: "s", 6: "p", 7: "c", 8: "p", 9: "p", 10: "n",

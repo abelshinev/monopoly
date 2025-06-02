@@ -1,4 +1,5 @@
 from player import init_player_list, Token
+from cc_function_list import gojf_fix
 
 no_players = int(input("Enter the number of players: "))
 player_list = init_player_list(no_players)
@@ -45,6 +46,8 @@ def play_round():
             print(f"{p.name} is currently in jail, pay 50 or roll a double")
             g = input("Type `t` to Trade\nType `h` for House Management")
             wait(p, g)
+            if p.gojf:
+                print("Enter `GOJF` to use get out of jail free card")
             x = input("1. Pay $50\n2. Roll a double\n--->>")
 
             if x == '1':
@@ -62,6 +65,12 @@ def play_round():
                     play_turn(p)
                 else:
                     print(f"Maybe next time")
+            
+            elif x == 'GOJF':
+                print(f"{p.name} used their get out of jail free card!")
+                play_turn(p)
+                p.in_jail
+                p.gojf = False
 
             else:
                 print("Invalid option fuck nigga")

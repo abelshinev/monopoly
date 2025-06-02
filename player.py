@@ -32,6 +32,7 @@ class Token:
     """
     in_jail = False
     double_counter = 0
+    gojf = False
 
     def __init__(self, name: str, pos: int, bal: int, properties: list): # Constructor
         self.name = name
@@ -324,7 +325,7 @@ class Token:
             if property_obj.is_owned == False:    # If property is not owned
                 print(f"{property_obj.name} costs ${property_obj.price}")
                 clause = input(f"Do you want to buy {property_obj.name}? (y/n)\n")
-                if clause == "y":
+                if clause.lower() == "y":
                     self.purchase(self.pos, type=type)
                 
 
@@ -357,6 +358,10 @@ class Token:
         else:
             print("Sell or be bankrupt")
 
+    def wildcard_edge_case(self, card: list): # For very rare edge cases where player_list input required
+        if card[1] == 'bday':
+            bday(self, player_list)
+
     def land(self, d1, d2):
         print(f"{self.name}'s current pos = {self.pos}, {map_legend[self.pos]} [temporary]\n\n")
         if map_legend[self.pos] == 'p':
@@ -377,11 +382,22 @@ class Token:
             print(chance_card)                          # while still allowing for it to pass the entire key-val pair into the function
             # print("Sendning over to chance fn")
             read_chance_cards(self, chance_deck[chance_card])
-        elif map_legend[self.pos] == 'cc':
+
+        elif map_legend[self.pos] == 'cc': # If current player spot is community chest
+
+            def wildcard_edge_case(card: list): # For very rare edge cases where player_list input required
+                if card[0] == 'bday':
+                    bday(self, player_list)
+            
             print(self.name, "Pickup a community chest card it reads:\n")
             cc_card = choice(list(cc_deck))
             print(cc_card)
-            read_cc_cards(self, cc_deck[cc_card])
+
+            if cc_deck[cc_card][0] == 'bday':
+                wildcard_edge_case(cc_deck[cc_card])
+            else:
+                read_cc_cards(self, cc_deck[cc_card])
+
         elif map_legend[self.pos] == 't':
             print(f"{self.name} has moved {d1+d2} spaces to ", end="")
             self.pay_tax()
