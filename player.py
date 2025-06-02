@@ -1,5 +1,6 @@
 from random import randint, choice
 from squares import *
+from cc_function_list import *
 
 player_list = list()
 

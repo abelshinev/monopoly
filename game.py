@@ -66,11 +66,11 @@ def play_round():
                 else:
                     print(f"Maybe next time")
             
-            elif x == 'GOJF':
+            elif x.upper() == 'GOJF':
                 print(f"{p.name} used their get out of jail free card!")
                 play_turn(p)
-                p.in_jail
-                p.gojf = False
+                p.in_jail = False
+                gojf_fix(p)
 
             else:
                 print("Invalid option fuck nigga")

@@ -18,8 +18,8 @@ chance_deck = {
 #     "You have been elected Chairman of the Board. Pay each player $50": ['lossall', 50],
 #     "Your building loan matures. Collect $150": ['gain', 150],
 #     "Speeding fine $15": ['loss', 15],
-    "GOJF LOCK": False
 }
+CHANCE_GOJF_LOCK = False
 
 cc_deck = {
     # "Advance to Go (Collect $200)": ["move", 0],
@@ -38,13 +38,28 @@ cc_deck = {
     "You are assessed for street repairs: $40 per house, $115 per hotel": ['repair', 'cc'],
     # "You have won second prize in a beauty contest. Collect $10": ['gain', 10],
     # "You inherit $100": ['gain', 100],
-    "GOJF LOCK": False
 }
+CC_GOJF_LOCK = False
+
+def gojf_fix(player):
+    global CC_GOJF_LOCK, CHANCE_GOJF_LOCK
+    print("UNLOCKING GOJF")
+    if CC_GOJF_LOCK:
+        cc_deck.update({"Get out of Jail Free": ['gojf', 0]})
+        CC_GOJF_LOCK = False
+        print("\nCOMM CHEST GOJF REFILLED")
+    elif CHANCE_GOJF_LOCK:
+        chance_deck.update({"Get out of Jail Free": ['gojf', 0]})
+        CHANCE_GOJF_LOCK = False
+        print("\nCHANCE GOJF REFILLED")
+    player.gojf = False
 
 
 def gojf(player):
     print("GET OUT OF JAIL FREE card has been added to your inventory,", player.name)
     player.gojf = True
+    print("GOJF LOCKED")
+    
 
 
 def bday(player, player_list: list):
@@ -87,6 +102,7 @@ def go_to_jail_fns(player):
 
 
 def read_chance_cards(player, chance_card: list): 
+    global CHANCE_GOJF_LOCK
     # print("Recieved chance fn", chance_card)
     if chance_card[0] == 'jail':
         go_to_jail_fns(player)
@@ -113,12 +129,15 @@ def read_chance_cards(player, chance_card: list):
     elif chance_card[0] == 'repair':
         repair(player, chance_card[1])
     elif chance_card[0] == 'gojf':
+        CHANCE_GOJF_LOCK = True
+        del chance_deck["Get out of Jail Free"]
         gojf(player)
 
     else:
         print("IMPOSSIBLE! NOT HERE ?!")
 
 def read_cc_cards(player, cc_card: list):
+    global CC_GOJF_LOCK
     if cc_card[0] == 'jail':
         go_to_jail_fns(player)
     elif cc_card[0] == 'gain':
@@ -140,6 +159,8 @@ def read_cc_cards(player, cc_card: list):
     elif cc_card[0] == 'repair':
         repair(player, cc_card[1])
     elif cc_card[0] == 'gojf':
+        CC_GOJF_LOCK = True
+        del cc_deck["Get out of Jail Free"]
         gojf(player)
 
     else:
