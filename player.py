@@ -375,6 +375,7 @@ class Token:
             print(self.name, "Pickup a chance card it reads:\n")
             chance_card = choice(list(chance_deck))     # Typecasts dictionary to list of its keys to use as a choice
             print(chance_card)                          # while still allowing for it to pass the entire key-val pair into the function
+            # print("Sendning over to chance fn")
             read_chance_cards(self, chance_deck[chance_card])
         elif map_legend[self.pos] == 'cc':
             print(self.name, "Pickup a community chest card it reads:\n")
@@ -391,6 +392,7 @@ class Token:
     def move(self, double_counter: int):
         
         d1, d2 = self.diceroll()
+        print(f"{self.name}'s current position is {self.pos} \ncurrent bal is {self.bal}")
 
         print(f"{self.name} has rolled a {d1} and a {d2}!\n")
         if double_counter == 2:

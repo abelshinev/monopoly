@@ -42,6 +42,7 @@ def go_to_jail_fns(player):
 
 
 def read_chance_cards(player, chance_card: list): 
+    # print("Recieved chance fn", chance_card)
     if chance_card[0] == 'jail':
         player.in_jail = True
         player.pos = 10
@@ -53,8 +54,10 @@ def read_chance_cards(player, chance_card: list):
             print("players current balance is", player.bal)
         else:
             print("Bankruptcy :(")
-    elif chance_card == 'move':
-        if player.pos < 0:
+    elif chance_card[0] == 'move':
+        # print("Movement detected")
+        if chance_card[1] < 0:
+            print(f" {player.name} is moving {chance_card[1]} steps")
             player.pos += chance_card[1]
         else:
             if player.pos > chance_card[1]:
@@ -76,14 +79,11 @@ def read_cc_cards(player, cc_card: list):
             print("players current balance is", player.bal)
         else:
             print("Bankruptcy :(")
-    elif cc_card == 'move':
+    elif cc_card[0] == 'move':
 
-        if cc_card[1] < 0:
-            player.pos += cc_card[1]
-        else:
-            if player.pos > cc_card[1]:
-                print("You pass go and collect $200")
-                player.bal += 200
-                player.pos = cc_card[1]
+        if player.pos > cc_card[1]:
+            print("You pass go and collect $200")
+            player.bal += 200
+            player.pos = cc_card[1]
         
         player.land(0,0)
