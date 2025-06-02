@@ -373,18 +373,13 @@ class Token:
             self.in_jail = True
         elif map_legend[self.pos] == 'c':
             print(self.name, "Pickup a chance card it reads:\n")
-            chance_card = choice(chance_deck)
-            print(chance_card)
-            print("*"*20)
-            print("*"*20)
-            print("*"*20)
+            chance_card = choice(list(chance_deck))     # Typecasts dictionary to list of its keys to use as a choice
+            print(chance_card)                          # while still allowing for it to pass the entire key-val pair into the function
+            read_chance_cards(self, chance_deck[chance_card])
         elif map_legend[self.pos] == 'cc':
             print(self.name, "Pickup a community chest card it reads:\n")
             cc_card = choice(list(cc_deck))
             print(cc_card)
-            print("*"*20)
-            print("*"*20)
-            print("*"*20)
             read_cc_cards(self, cc_deck[cc_card])
         elif map_legend[self.pos] == 't':
             print(f"{self.name} has moved {d1+d2} spaces to ", end="")

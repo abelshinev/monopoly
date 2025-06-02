@@ -1,22 +1,22 @@
 
-chance_deck = [
-    "Advance to Go (Collect $200)",
-    "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",
-    "Advance to Mayfair",
-    "Advance to Trafalgar Square. If you pass Go, collect $200",
-    "Advance to Pall Mall. If you pass Go, collect $200",
-    "Take a trip to Marylebone Station. If you pass Go, collect $200",
-    "Advance to the nearest Utility. If unowned, you may buy it. If owned, pay owner 10x dice roll",
-    "Advance to the nearest Railway Station and pay owner twice the rent",
-    "Bank pays you dividend of $50",
-    "Get out of Jail Free",
-    "Go back three spaces",
-    "Make general repairs on all your property: $25 per house, $100 per hotel",
-    "Pay poor tax of $15",
-    "You have been elected Chairman of the Board. Pay each player $50",
-    "Your building loan matures. Collect $150",
-    "Speeding fine $15"
-]
+chance_deck = {
+    "Advance to Go (Collect $200)": ['move', 0],
+    "Go to Jail. Go directly to jail, do not pass Go, do not collect $200": ['jail', 0],
+    "Advance to Mayfair": ['move', 40],
+    "Advance to Trafalgar Square. If you pass Go, collect $200": ['gain', 200],
+    "Advance to Pall Mall. If you pass Go, collect $200": ['move', 11],
+    "Take a trip to Marylebone Station. If you pass Go, collect $200": ['move', 15],
+    "Advance to the nearest Utility. If unowned, you may buy it. If owned, pay owner 10x dice roll": ['move', 12],
+    "Advance to the nearest Railway Station and pay owner twice the rent": ['move', 5],
+    "Bank pays you dividend of $50": ['gain', 50],
+    "Get out of Jail Free": ['gojf', 0],
+    "Go back three spaces": ['move', -3],
+    "Make general repairs on all your property: $25 per house, $100 per hotel": ['repair', 0],
+    "Pay poor tax of $15": ['loss', 15],
+    "You have been elected Chairman of the Board. Pay each player $50": ['lossall', 50],
+    "Your building loan matures. Collect $150": ['gain', 150],
+    "Speeding fine $15": ['loss', 15]
+}
 
 cc_deck = {
     "Advance to Go (Collect $200)": ["move", 0],
@@ -41,8 +41,26 @@ def go_to_jail_fns(player):
     pass
 
 
-def read_chance_cards(player, chance_card): 
-    pass
+def read_chance_cards(player, chance_card: list): 
+    if chance_card[0] == 'jail':
+        player.in_jail = True
+        player.pos = 10
+    elif chance_card[0] == 'gain':
+        player.bal += chance_card[1]
+        print("players current balance is", player.bal)
+    elif chance_card[0] == 'loss':
+        if (player.decrease_bal(chance_card[1])):
+            print("players current balance is", player.bal)
+        else:
+            print("Bankruptcy :(")
+    elif chance_card == 'move':
+        if player.pos > chance_card[1]:
+            print("You pass go and collect $200")
+            player.bal += 200
+            player.pos = chance_card[1]
+            player.land(0,0)
+        else:
+            player.land(0,0)
 
 def read_cc_cards(player, cc_card: list):
     if cc_card[0] == 'jail':
@@ -57,10 +75,13 @@ def read_cc_cards(player, cc_card: list):
         else:
             print("Bankruptcy :(")
     elif cc_card == 'move':
-        if player.pos > cc_card[1]:
-            print("You pass go and collect $200")
-            player.bal += 200
-            player.pos = cc_card[1]
-            player.land(0,0)
+
+        if cc_card[1] < 0:
+            player.pos += cc_card[1]
         else:
-            player.land(0,0)
+            if player.pos > cc_card[1]:
+                print("You pass go and collect $200")
+                player.bal += 200
+                player.pos = cc_card[1]
+        
+        player.land(0,0)
