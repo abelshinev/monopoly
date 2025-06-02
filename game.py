@@ -32,6 +32,7 @@ def play_turn(p: Token):
     else:
         wait(p, g)
         play_turn(p)
+        g = ''
         wait(p, g)
     double_counter = 0
 
