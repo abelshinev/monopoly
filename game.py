@@ -70,7 +70,7 @@ def play_round():
                 print(f"{p.name} used their get out of jail free card!")
                 play_turn(p)
                 p.in_jail = False
-                gojf_fix(p)
+                gojf_fix(p) # Fixes go jf
 
             else:
                 print("Invalid option fuck nigga")
