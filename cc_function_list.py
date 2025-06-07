@@ -2,22 +2,22 @@
 from squares import Property
 
 chance_deck = {
-#     "Advance to Go (Collect $200)": ['move', 0],
-#     "Go to Jail. Go directly to jail, do not pass Go, do not collect $200": ['jail', 0],
-#     "Advance to Mayfair": ['move', 40],
-#     "Advance to Trafalgar Square. If you pass Go, collect $200": ['gain', 200],
-#     "Advance to Pall Mall. If you pass Go, collect $200": ['move', 11],
-#     "Take a trip to Marylebone Station. If you pass Go, collect $200": ['move', 15],
-#     "Advance to the nearest Utility. If unowned, you may buy it. If owned, pay owner 10x dice roll": ['move', 12],
-#     "Advance to the nearest Railway Station and pay owner twice the rent": ['move', 5],
-#     "Bank pays you dividend of $50": ['gain', 50],
+    "Advance to Go (Collect $200)": ['move', 0],
+    "Go to Jail. Go directly to jail, do not pass Go, do not collect $200": ['jail', 0],
+    "Advance to Mayfair": ['move', 40],
+    "Advance to Trafalgar Square. If you pass Go, collect $200": ['gain', 200],
+    "Advance to Pall Mall. If you pass Go, collect $200": ['move', 11],
+    "Take a trip to Marylebone Station. If you pass Go, collect $200": ['move', 15],
+    "Advance to the nearest Utility. If unowned, you may buy it. If owned, pay owner 10x dice roll": ['move', 12],
+    "Advance to the nearest Railway Station and pay owner twice the rent": ['move', 5],
+    "Bank pays you dividend of $50": ['gain', 50],
     "Get out of Jail Free": ['gojf', 0],
-    # "Go back three spaces": ['move', -3],
+    "Go back three spaces": ['move', -3],
     "Make general repairs on all your property: $25 per house, $100 per hotel": ['repair', 'c'],
-#     "Pay poor tax of $15": ['loss', 15],
-#     "You have been elected Chairman of the Board. Pay each player $50": ['lossall', 50],
-#     "Your building loan matures. Collect $150": ['gain', 150],
-#     "Speeding fine $15": ['loss', 15],
+    "Pay poor tax of $15": ['loss', 15],
+    "You have been elected Chairman of the Board. Pay each player $50": ['lossall', 50],
+    "Your building loan matures. Collect $150": ['gain', 150],
+    "Speeding fine $15": ['loss', 15],
 }
 CHANCE_GOJF_LOCK = False
 
