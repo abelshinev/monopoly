@@ -23,6 +23,9 @@ def wait(p: Token, mode):
 double_counter = 0
 def play_turn(p: Token):
     global double_counter # It will not access top level double_counter otherwise
+    if p.bankrupt:
+        player_list.remove(p)
+        return
     g = input("Type `t` to Trade\nType `h` for House Management\nPress `Enter` to Roll Dice\n")
     if g == '':
         double = p.move(double_counter)
@@ -85,4 +88,7 @@ while len(player_list) >= 2 and len(player_list) <= 4:
     if i == "n":
         break
     play_round()
+
+if len(player_list) == 1:
+    print(f"{player_list[0].name} is the winner!")
 

@@ -34,6 +34,7 @@ class Token:
     in_jail = False
     double_counter = 0
     gojf = False
+    bankrupt = False
 
     def __init__(self, name: str, pos: int, bal: int, properties: list): # Constructor
         self.name = name
@@ -58,6 +59,7 @@ class Token:
             return True
         else:
             print(f"/!\ Insufficient balance: You are short ${amt - self.bal}")
+            self.bankrupt = True
             return False
 
 
